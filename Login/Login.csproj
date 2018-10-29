@@ -83,7 +83,7 @@
     <Compile Include="EditSampleUnitForm.Designer.cs">
       <DependentUpon>EditSampleUnitForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImageInfo.cs" />
+    <Compile Include="DataCenter\ImageInfo.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
