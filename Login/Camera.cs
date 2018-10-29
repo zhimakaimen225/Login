@@ -154,6 +154,7 @@ namespace Gd
                 boxBmp.Save(orgFilePath + orgFileName, System.Drawing.Imaging.ImageFormat.Png);
             }
 
+
             Pen p = new Pen(Color.Red);
 
             //Point p1 = new Point(0, finderFrameHeight / 2);
