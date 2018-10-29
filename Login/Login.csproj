@@ -55,7 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Camera.cs" />
+    <Compile Include="Camera\Camera.cs" />
     <Compile Include="Camera\CameraSetInfo.cs" />
     <Compile Include="Camera\CameraSetting.cs">
       <SubType>Form</SubType>
@@ -69,7 +69,7 @@
     <Compile Include="ChangePwdForm.Designer.cs">
       <DependentUpon>ChangePwdForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataCenter.cs" />
+    <Compile Include="DataCenter\DataCenter.cs" />
     <Compile Include="DB\DBClient.cs" />
     <Compile Include="EditLoginForm.cs">
       <SubType>Form</SubType>
@@ -106,8 +106,8 @@
     <Compile Include="PrintHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SampleUnitInfo.cs" />
-    <Compile Include="UserInfo.cs" />
+    <Compile Include="DataCenter\SampleUnitInfo.cs" />
+    <Compile Include="DataCenter\UserInfo.cs" />
     <EmbeddedResource Include="Camera\CameraSetting.resx">
       <DependentUpon>CameraSetting.cs</DependentUpon>
     </EmbeddedResource>
