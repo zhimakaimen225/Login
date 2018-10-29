@@ -70,7 +70,7 @@
       <DependentUpon>ChangePwdForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DataCenter\DataCenter.cs" />
-    <Compile Include="DB\DBClient.cs" />
+    <Compile Include="Database\DBClient.cs" />
     <Compile Include="EditLoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,7 +96,7 @@
     <Compile Include="LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DB\MySqlDBClient.cs" />
+    <Compile Include="Database\MySqlDBClient.cs" />
     <Compile Include="PrintForm.cs">
       <SubType>Form</SubType>
     </Compile>
