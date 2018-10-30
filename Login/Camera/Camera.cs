@@ -435,7 +435,8 @@ namespace Gd
             CameraSetting settingForm = new CameraSetting(camDeviceIndex);
             settingForm.cameraIndex = camDeviceIndex;
             //if (settingForm.ShowDialog() == DialogResult.OK && settingForm.cameraIndex != camDeviceIndex)
-            settingForm.ShowDialog();
+            //settingForm.ShowDialog();
+            if (settingForm.ShowDialog() == DialogResult.OK)
             {
                 Stop();
                 SetCamera(settingForm.cameraIndex);

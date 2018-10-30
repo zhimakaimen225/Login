@@ -33,9 +33,10 @@ namespace Gd
             {
                 ///---实例化对象
                 comboBoxCamera.Items.Add(videoCaptureDevices[i].Name);
-                comboBoxCamera.SelectedIndex = index;
-                cameraIndex = index;
+
             }
+            comboBoxCamera.SelectedIndex = index;
+            cameraIndex = index;
         }
 
         private void buttonOk_Click(object sender, EventArgs e)
