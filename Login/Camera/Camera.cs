@@ -38,6 +38,9 @@ namespace Gd
 
         int panStep = 10;
         int tiltStep = 10;
+        int hMulti = 1;
+        int vMulti = 1;
+
 
         Bitmap boxBmp = new Bitmap(240, 180);
         Rectangle destRect = new Rectangle(0, 0, 240, 180);
@@ -56,13 +59,14 @@ namespace Gd
             {
                 videoCaptureDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
                 ///---摄像头数量大于0
-                if (videoCaptureDevices.Count > 0)
-                {
-                    ///---实例化对象
-                    cam = new VideoCaptureDevice(videoCaptureDevices[camDeviceIndex].MonikerString);
-                    ///---绑定事件
-                    cam.NewFrame += new NewFrameEventHandler(Cam_NewFrame);
-                }
+                //if (videoCaptureDevices.Count > 0)
+                //{
+                //    ///---实例化对象
+                //    cam = new VideoCaptureDevice(videoCaptureDevices[camDeviceIndex].MonikerString);
+                //    ///---绑定事件
+                //    cam.NewFrame += new NewFrameEventHandler(Cam_NewFrame);
+                //}
+                SetCamera(0);
 
                 //PrintAllProperties();
                 //cam.DisplayPropertyPage(IntPtr.Zero);
@@ -137,9 +141,27 @@ namespace Gd
             Graphics g = Graphics.FromImage(boxBmp);
             g.DrawImage(middleBmp, destRect);
 
-            RotateFlipType horizontalMirror = (hMirror == true ? RotateFlipType.RotateNoneFlipX : RotateFlipType.RotateNoneFlipNone);
-            RotateFlipType verticalMirror = (vMirror == true ? RotateFlipType.RotateNoneFlipY : RotateFlipType.RotateNoneFlipNone);
-            boxBmp.RotateFlip(horizontalMirror | verticalMirror);
+            //RotateFlipType horizontalMirror = (hMirror == true ? RotateFlipType.RotateNoneFlipX : RotateFlipType.RotateNoneFlipNone);
+            //RotateFlipType verticalMirror = (vMirror == true ? RotateFlipType.RotateNoneFlipY : RotateFlipType.RotateNoneFlipNone);
+            //boxBmp.RotateFlip(horizontalMirror | verticalMirror);
+            RotateFlipType rotate;
+            if (hMirror == false && vMirror == false)
+            {
+                rotate = RotateFlipType.RotateNoneFlipNone;
+            }
+            else if (hMirror == true && vMirror == false)
+            {
+                rotate = RotateFlipType.RotateNoneFlipX;
+            }
+            else if (vMirror == true && hMirror == false)
+            {
+                rotate = RotateFlipType.RotateNoneFlipY;
+            }
+            else
+            {
+                rotate = RotateFlipType.RotateNoneFlipXY;
+            }
+            boxBmp.RotateFlip(rotate);
 
             string timeStr = "";
             string orgFilePath = "";
@@ -203,7 +225,10 @@ namespace Gd
         {
             try
             {
-                cam.Start();
+                if (cam != null)
+                {
+                    cam.Start();
+                }
             }
             catch (Exception ex)
             {
@@ -215,11 +240,10 @@ namespace Gd
         {
             try
             {
-                if (cam.IsRunning)
+                if (cam != null && cam.IsRunning)
                 {
                     cam.Stop();
                 }
-
             }
             catch (Exception ex)
             {
@@ -312,50 +336,82 @@ namespace Gd
 
         public void MoveLeft()
         {
-            finderFrameX -= panStep;
+            finderFrameX -= panStep * hMulti;
             if (finderFrameX < 0)
             {
                  finderFrameX = 0;
-            }            
-        }
-        
-        public void MoveRight()
-        {
-            finderFrameX += panStep;
+            }
             if (finderFrameX > orgWidth - finderFrameWidth)
             {
                 finderFrameX = orgWidth - finderFrameWidth;
             }
         }
+        
+        public void MoveRight()
+        {
+            finderFrameX += panStep * hMulti;
+            if (finderFrameX > orgWidth - finderFrameWidth)
+            {
+                finderFrameX = orgWidth - finderFrameWidth;
+            }
+            if (finderFrameX < 0)
+            {
+                finderFrameX = 0;
+            }
+        }
 
         public void MoveUp()
         {
-            finderFrameY -= tiltStep;
+            finderFrameY -= tiltStep * vMulti;
             if (finderFrameY < 0)
             {
                 finderFrameY = 0;
             }
-        }
-
-        public void MoveDown()
-        {
-            finderFrameY += tiltStep;
             if (finderFrameY > orgHeight - finderFrameHeight)
             {
                 finderFrameY = orgHeight - finderFrameHeight;
             }
         }
 
+        public void MoveDown()
+        {
+            finderFrameY += tiltStep * vMulti;
+            if (finderFrameY > orgHeight - finderFrameHeight)
+            {
+                finderFrameY = orgHeight - finderFrameHeight;
+            }
+            if (finderFrameY < 0)
+            {
+                finderFrameY = 0;
+            }
+        }
+
         public void HMirror()
         {
             hMirror = !hMirror;
-            finderFrameX = orgWidth - (finderFrameX + finderFrameWidth);
+            //finderFrameX = orgWidth - (finderFrameX + finderFrameWidth);
+            if (hMirror == true)
+            {
+                hMulti = -1;
+            }
+            else
+            {
+                hMulti = 1;
+            }
         }
 
         public void VMirror()
         {
             vMirror = !vMirror;
-            finderFrameY = orgHeight - (finderFrameY + finderFrameHeight);
+            //finderFrameY = orgHeight - (finderFrameY + finderFrameHeight);
+            if (vMirror == true)
+            {
+                vMulti = -1;
+            }
+            else
+            {
+                vMulti = 1;
+            }
         }
 
         public void CaptureImage()
